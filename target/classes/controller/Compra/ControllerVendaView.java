@@ -46,7 +46,7 @@ public class ControllerVendaView implements ActionListener {
             for (Venda vendaAtual : vendaList) {
                 tableLista.addRow(new Object[]{
                     vendaAtual.getId(),
-                    vendaAtual.getCliente().getNome(),
+                    vendaAtual.getCarteirinha().getCliente().getNome(),
                     vendaAtual.getValorVenda(),
                     //                    //vendaAtual.getFlagTipoDesconto(),
                     //                    //vendaAtual.getDataHoraVenda(),

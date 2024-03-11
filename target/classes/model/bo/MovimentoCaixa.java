@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -39,33 +40,23 @@ public class MovimentoCaixa {
     
     @Column
     private char status;
-
+    
     @JoinColumn
-    @OneToMany
-    private Contas contas;
-    @JoinColumn
-    @ManyToMany
+    @ManyToOne
     private Caixa caixa;
     
     
     public MovimentoCaixa() {
     }
 
-    public MovimentoCaixa(int id, String dataHoraMovimento, float valorMovimento, String observacao, char flagTipoMovimento, char status) {
+    public MovimentoCaixa(int id, String dataHoraMovimento, float valorMovimento, String observacao, char flagTipoMovimento, char status, Caixa caixa) {
         this.id = id;
         this.dataHoraMovimento = dataHoraMovimento;
         this.valorMovimento = valorMovimento;
         this.observacao = observacao;
         this.flagTipoMovimento = flagTipoMovimento;
         this.status = status;
-    }
-
-    public char getStatus() {
-        return status;
-    }
-
-    public void setStatus(char status) {
-        this.status = status;
+        this.caixa = caixa;
     }
 
     public int getId() {
@@ -108,6 +99,24 @@ public class MovimentoCaixa {
         this.flagTipoMovimento = flagTipoMovimento;
     }
 
+    public char getStatus() {
+        return status;
+    }
+
+    public void setStatus(char status) {
+        this.status = status;
+    }
+
+    public Caixa getCaixa() {
+        return caixa;
+    }
+
+    public void setCaixa(Caixa caixa) {
+        this.caixa = caixa;
+    }
+
+    
+
     @Override
     public String toString() {
         return this.getId() + " "+
@@ -117,16 +126,6 @@ public class MovimentoCaixa {
                 this.getFlagTipoMovimento() + " "+
                 this.getStatus() + " "+
                 this.getId() +" "+
-                this.contas.getDataHoraEmissao() +" "+
-                this.contas.getDataVencimento() + " "+
-                this.contas.getDataQuitacao() + " "+
-                this.contas.getValorEmitido() + " "+ 
-                this.contas.getValorDesconto() + " "+
-                this.contas.getValorAcrescimo() + " "+
-                this.contas.getValorQuitado() + " "+ 
-                this.contas.getObservacao() + " "+
-                this.contas.getFlagTipoConta() + " "+
-                this.contas.getStatus() + " " +
                 this.caixa.getId() + " "+
                 this.caixa.getDataHoraAbertura() + " " +
                 this.caixa.getDataHoraFechamento() + " "+

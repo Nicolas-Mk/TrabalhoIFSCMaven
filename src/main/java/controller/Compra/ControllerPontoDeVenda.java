@@ -79,9 +79,8 @@ public class ControllerPontoDeVenda implements ActionListener {
 
                 itemVenda.setProduto(produto);
                 itemVenda.setVenda(venda);
-                itemVenda.setCarteirinha(carteirinha);
                 venda.setFuncionario(funcionario);
-                venda.setCliente(cliente);
+                venda.getCarteirinha().setCliente(cliente);
 
                 venda.setObservacao(this.pontoDeVendaView.getObservacao().getText().toString().trim());
 
@@ -92,7 +91,7 @@ public class ControllerPontoDeVenda implements ActionListener {
                 }
 
                 venda.getFuncionario().setId(Integer.parseInt(this.pontoDeVendaView.getIdFuncionario().getText().trim()));
-                venda.getCliente().setId(Integer.parseInt(this.pontoDeVendaView.getIdCliente().getText().trim()));
+                venda.getCarteirinha().getCliente().setId(Integer.parseInt(this.pontoDeVendaView.getIdCliente().getText().trim()));
                 venda.setDataVenda(this.pontoDeVendaView.getDataDeEmissao().getText().trim());
                 venda.setHoraVenda(this.pontoDeVendaView.getHoraDeEmissao().getText().trim());
                 venda.setValorVenda(Float.valueOf(this.pontoDeVendaView.getTotal().getText().trim()));
@@ -103,7 +102,7 @@ public class ControllerPontoDeVenda implements ActionListener {
                     itemVenda.setValorUnitario(Float.parseFloat((String) tabela.getValueAt(i, 2)));
                     itemVenda.getProduto().setDescricao((String) tabela.getValueAt(i, 1));
                     itemVenda.setStatus((String) tabela.getValueAt(i, 4));
-                    itemVenda.getVenda().getCliente().setId(Integer.valueOf(this.pontoDeVendaView.getIdCliente().toString()));
+                    itemVenda.getVenda().getCarteirinha().getCliente().setId(Integer.valueOf(this.pontoDeVendaView.getIdCliente().toString()));
                 }
 
                 VendaService.adicionar(venda);

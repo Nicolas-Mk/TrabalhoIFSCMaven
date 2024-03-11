@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -42,16 +43,12 @@ public class Venda {
     private String status;
 
     @JoinColumn
-    @ManyToMany
-    private Cliente cliente;
-    
-    @JoinColumn
-    @OneToOne
+    @ManyToOne
     private Funcionario funcionario;
     
     @JoinColumn
-    @OneToMany
-    private Produto produto;
+    @ManyToOne
+    private Carteirinha carteirinha;
 
     public Venda() {
     }
@@ -66,29 +63,12 @@ public class Venda {
 //        this.flagTipoDesconto = flagTipoDesconto;
         this.observacao = observacao;
         this.status = status;
-        this.cliente = cliente;
         this.funcionario = funcionario;
-        this.produto = produto;
     }
 
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
 
     public String getStatus() {
         return status;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
     }
 
     public Funcionario getFuncionario() {

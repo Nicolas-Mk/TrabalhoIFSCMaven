@@ -47,7 +47,7 @@ public class DAOVenda implements InterfaceDAO<Venda> {
             pstm.setString(4, objeto.getObservacao());
             pstm.setString(5, objeto.getStatus());
             pstm.setInt(6,objeto.getFuncionario().getId());
-            pstm.setInt(7,objeto.getCliente().getId());
+            pstm.setInt(7,objeto.getCarteirinha().getCliente().getId());
             
             pstm.execute();
         } catch (SQLException ex) {
@@ -78,7 +78,7 @@ public class DAOVenda implements InterfaceDAO<Venda> {
             pstm.setString(1, objeto.getObservacao());
             pstm.setString(2, objeto.getStatus());
             pstm.setInt(3, objeto.getFuncionario().getId());
-            pstm.setInt(4, objeto.getCliente().getId());
+            pstm.setInt(4, objeto.getCarteirinha().getCliente().getId());
             pstm.setString(5, objeto.getDataVenda());
             pstm.setString(6, objeto.getHoraVenda());
             pstm.setFloat(7, objeto.getValorVenda());

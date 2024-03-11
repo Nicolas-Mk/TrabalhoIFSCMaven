@@ -48,10 +48,10 @@ public class DAOItemVenda implements InterfaceDAO<ItemVenda> {
         
         objeto.setVenda(venda);
         objeto.setProduto(produto);
-        objeto.setCarteirinha(carterinha);
+        objeto.getVenda().setCarteirinha(carterinha);
         
         carterinha.setCliente(cliente);
-        venda.setCliente(cliente);
+        venda.getCarteirinha().setCliente(cliente);
         
         
         try {
@@ -60,7 +60,7 @@ public class DAOItemVenda implements InterfaceDAO<ItemVenda> {
                 pstm.setInt(1, (int) objeto.getQtdProduto());
                 pstm.setFloat(2, objeto.getValorUnitario());
                 pstm.setString(3, objeto.getStatus());
-                pstm.setInt(4, objeto.getVenda().getCliente().getId());
+                pstm.setInt(4, objeto.getVenda().getCarteirinha().getCliente().getId());
                 pstm.setInt(5, objeto.getProduto().getId());
                 pstm.setInt(6, objeto.getVenda().getId());
 
