@@ -53,9 +53,6 @@ public class Persiste {
         produtoList = new ArrayList<>();
         vendaList = new ArrayList<>();
         
-        
-       
-        
     }
     
     public static synchronized  Persiste getInstance(){ 

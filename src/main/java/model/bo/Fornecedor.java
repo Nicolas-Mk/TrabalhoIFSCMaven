@@ -22,7 +22,6 @@ public class Fornecedor  extends Pessoa{
     
     @Column
     private String razaoSocial;
-
     
     
     public Fornecedor() {

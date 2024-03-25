@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -33,10 +34,10 @@ public class Endereco {
     private String status;
 
     @JoinColumn
-    @OneToOne
+    @OneToMany
     public Bairro bairro;
     @JoinColumn
-    @OneToOne
+    @OneToMany
     public Cidade cidade;
 
     public Endereco() {

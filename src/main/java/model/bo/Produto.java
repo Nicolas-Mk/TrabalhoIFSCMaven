@@ -30,29 +30,24 @@ public class Produto {
     
     @Column
     private String status;
+    
+    @Column
+    private float preco;
 
     public Produto() {
     }
 
-    public Produto(int id, String descricao, String codigoBarra, String status) {
+    public Produto(int id, String descricao, String codigoBarra, String status, float preco) {
         this.id = id;
         this.descricao = descricao;
         this.codigoBarra = codigoBarra;
         this.status = status;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+        this.preco = preco;
     }
 
     public int getId() {
         return id;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -70,13 +65,26 @@ public class Produto {
         return codigoBarra;
     }
 
-
-    
-    
     public void setCodigoBarra(String codigoBarra) {
         this.codigoBarra = codigoBarra;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public float getPreco() {
+        return preco;
+    }
+
+    public void setPreco(float preco) {
+        this.preco = preco;
+    }
+    
     @Override
     public String toString() {
         return this.getId() + " "+

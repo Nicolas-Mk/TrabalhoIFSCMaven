@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 /**
@@ -41,14 +42,14 @@ public class MovimentacaoEstoque {
     private char status;
 
     @JoinColumn
-    @OneToMany
+    @ManyToOne
     private Produto produto;
     
-    @OneToMany
+    @OneToOne
     @JoinColumn
     private ItemVenda itemVenda;
     
-    @OneToMany
+    @OneToOne
     @JoinColumn
     private ItemCompra itemCompra;
     
@@ -59,21 +60,17 @@ public class MovimentacaoEstoque {
     public MovimentacaoEstoque() {
     }
 
-    public MovimentacaoEstoque(int id, String dataHoraMovimento, char flagTipoMovimento, float qtdMovimentada, String observacaoMovimento, char status) {
+    public MovimentacaoEstoque(int id, String dataHoraMovimento, char flagTipoMovimento, float qtdMovimentada, String observacaoMovimento, char status, Produto produto, ItemVenda itemVenda, ItemCompra itemCompra, Funcionario funcionario) {
         this.id = id;
         this.dataHoraMovimento = dataHoraMovimento;
         this.flagTipoMovimento = flagTipoMovimento;
         this.qtdMovimentada = qtdMovimentada;
         this.observacaoMovimento = observacaoMovimento;
         this.status = status;
-    }
-
-    public String getObservacaoMovimento() {
-        return observacaoMovimento;
-    }
-
-    public void setObservacaoMovimento(String observacaoMovimento) {
-        this.observacaoMovimento = observacaoMovimento;
+        this.produto = produto;
+        this.itemVenda = itemVenda;
+        this.itemCompra = itemCompra;
+        this.funcionario = funcionario;
     }
 
     public int getId() {
@@ -108,6 +105,14 @@ public class MovimentacaoEstoque {
         this.qtdMovimentada = qtdMovimentada;
     }
 
+    public String getObservacaoMovimento() {
+        return observacaoMovimento;
+    }
+
+    public void setObservacaoMovimento(String observacaoMovimento) {
+        this.observacaoMovimento = observacaoMovimento;
+    }
+
     public char getStatus() {
         return status;
     }
@@ -115,6 +120,40 @@ public class MovimentacaoEstoque {
     public void setStatus(char status) {
         this.status = status;
     }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+
+    public ItemVenda getItemVenda() {
+        return itemVenda;
+    }
+
+    public void setItemVenda(ItemVenda itemVenda) {
+        this.itemVenda = itemVenda;
+    }
+
+    public ItemCompra getItemCompra() {
+        return itemCompra;
+    }
+
+    public void setItemCompra(ItemCompra itemCompra) {
+        this.itemCompra = itemCompra;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+   
 
     @Override
     public String toString() {

@@ -55,32 +55,15 @@ public class Venda {
 
     ;
 
-    public Venda(int id, String dataVenda, String horaVenda, float valorVenda, char flagTipoDesconto, String observacao, String status, Cliente cliente, Funcionario funcionario, Produto produto) {
+    public Venda(int id, String dataVenda, String horaVenda, float valorVenda, String observacao, String status, Funcionario funcionario, Carteirinha carteirinha) {
         this.id = id;
         this.dataVenda = dataVenda;
         this.horaVenda = horaVenda;
         this.valorVenda = valorVenda;
-//        this.flagTipoDesconto = flagTipoDesconto;
         this.observacao = observacao;
         this.status = status;
         this.funcionario = funcionario;
-    }
-
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    public String setStatus(String status) {
-        return status;
+        this.carteirinha = carteirinha;
     }
 
     public int getId() {
@@ -122,6 +105,31 @@ public class Venda {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Funcionario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+    public Carteirinha getCarteirinha() {
+        return carteirinha;
+    }
+
+    public void setCarteirinha(Carteirinha carteirinha) {
+        this.carteirinha = carteirinha;
+    }
+
 
     @Override
     public String toString() {

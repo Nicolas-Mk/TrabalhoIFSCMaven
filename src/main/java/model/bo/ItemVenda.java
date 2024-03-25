@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -38,11 +39,7 @@ public class ItemVenda {
     @ManyToOne
     private Venda venda;
     
-    @ManyToMany
-    @JoinColumn
-    private Carteirinha carteirinha;
-    
-    @ManyToMany
+    @OneToMany
     @JoinColumn
     private Produto produto;
 
@@ -50,18 +47,16 @@ public class ItemVenda {
     
     public ItemVenda(){};
 
-    public ItemVenda(int id, float qtdProduto, float valorUnitario, String status, Venda venda, Carteirinha carteirinha, Produto produto) {
+    public ItemVenda(int id, float qtdProduto, float valorUnitario, String status, Venda venda, Produto produto) {
         this.id = id;
         this.qtdProduto = qtdProduto;
         this.valorUnitario = valorUnitario;
         this.status = status;
         this.venda = venda;
-        this.carteirinha = carteirinha;
         this.produto = produto;
     }
     
     
-
     public int getId() {
         return id;
     }
@@ -100,14 +95,6 @@ public class ItemVenda {
 
     public void setVenda(Venda venda) {
         this.venda = venda;
-    }
-
-    public Carteirinha getCarteirinha() {
-        return carteirinha;
-    }
-
-    public void setCarteirinha(Carteirinha carteirinha) {
-        this.carteirinha = carteirinha;
     }
 
     public Produto getProduto() {
