@@ -15,27 +15,47 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class DAOBairro implements InterfaceDAO<Bairro> {
 
+    private static DAOBairro instance;
+    protected EntityManager entityManager;
+
+    public static DAOBairro getInstance() {
+        if (instance == null) {
+            instance = new DAOBairro();
+        }
+        return instance;
+    }
+
+    public DAOBairro() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("pu_Cantina");
+
+        if (entityManager == null) {
+            entityManager = factory.createEntityManager();
+        }
+        return entityManager;
+
+    }
+
     @Override
     public void create(Bairro objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "INSERT INTO tblbairro (descricao) VALUES(?)";
-
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, objeto.getDescricao());
-            pstm.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
-
+          entityManager.getTransaction().begin();
+          entityManager.persist(objeto);
+          entityManager.getTransaction().commit();
+          
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          entityManager.getTransaction().rollback();
         }
-
     }
 
     @Override
@@ -45,23 +65,16 @@ public class DAOBairro implements InterfaceDAO<Bairro> {
 
     @Override
     public void update(Bairro objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "UPDATE tblbairro SET tblbairro.descricao = ? WHERE tblbairro.id = ?";
-        PreparedStatement pstm = null;
-        Bairro bairro = new Bairro();
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, objeto.getDescricao());
-            pstm.setInt(2, objeto.getId());
-            pstm.execute();
-
-        } catch (SQLException ex) {
+            Bairro bairro = entityManager.find(Bairro.class,objeto.getId());
+            
+            entityManager.getTransaction().begin();
+            entityManager.merge(objeto);
+            entityManager.getTransaction().commit();  
+        } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
+            entityManager.getTransaction().rollback();
         }
-
     }
 
     @Override
@@ -71,98 +84,23 @@ public class DAOBairro implements InterfaceDAO<Bairro> {
 
     @Override
     public List<Bairro> retrieve() {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id,descricao FROM tblbairro";
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        List<Bairro> bairroList = new ArrayList<>();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                Bairro bairro = new Bairro();
-                bairro.setId(rst.getInt("id"));
-                bairro.setDescricao(rst.getString("descricao"));
-                bairroList.add(bairro);
-            }
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return bairroList;
-        }
-
+        List<Bairro> listaBairros;
+        listaBairros = entityManager.createQuery("select b from Bairro b", Bairro.class).getResultList();
+        return listaBairros;
     }
 
     @Override
     public Bairro retrieve(int parPK) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id,descricao FROM tblbairro WHERE id = ? ";
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        Bairro bairro = new Bairro();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setInt(1, parPK);
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                bairro.setId(rst.getInt("id"));
-                bairro.setDescricao(rst.getString("descricao"));
-            }
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return bairro;
-
-        }
+        return entityManager.find(Bairro.class, parPK);
     }
 
     @Override
     public List<Bairro> retrieve(String parString) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id,descricao "
-                            + "FROM tblbairro "
-                            + "WHERE descricao LIKE ? ";
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        List<Bairro> bairroList = new ArrayList<>();
         
-        
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, "%" + parString + "%");
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                Bairro bairro = new Bairro();
-                bairro.setId(rst.getInt("id"));
-                bairro.setDescricao(rst.getString("descricao"));
-                bairroList.add(bairro);
-            }
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-
-            return bairroList;
-        }
+        List<Bairro> listaBairros;
+        listaBairros = entityManager.createQuery("select b from Bairro b where b.descricao like :parDescricao",Bairro.class).setParameter("parDescricao","%" +parString + "%").getResultList();
+        return listaBairros;
 
     }
-    
-    
-    
-  
+
 }

@@ -16,37 +16,33 @@ import model.bo.Bairro;
 public class BairroService {
 
     public static void adicionar(Bairro objeto) {
-        DAOBairro bairroDAO = new DAOBairro();
-        bairroDAO.create(objeto);
+        DAOBairro.getInstance().create(objeto);
 
     }
 
     public static List<Bairro> carregar() {
-        DAOBairro bairroDAO = new DAOBairro();
-        return bairroDAO.retrieve();
+       return DAOBairro.getInstance().retrieve();
 
     }
 
     public static Bairro carregar(int parPK) {
-        DAOBairro bairroDAO = new DAOBairro();
-        return bairroDAO.retrieve(parPK);
+        return DAOBairro.getInstance().retrieve(parPK);
+        
 
     }
 
     public static List<Bairro> carregar(String parString) {
-        DAOBairro bairroDAO = new DAOBairro();
-        return  bairroDAO.retrieve(parString);
+        return DAOBairro.getInstance().retrieve(parString);
+        
 
     }
     
     public static void atualizar(Bairro objeto) {
-        DAOBairro bairroDAO = new DAOBairro();
-        bairroDAO.update(objeto);
-
+       DAOBairro.getInstance().update(objeto);
+     
     }
      public static void remover (Bairro objeto) {
-        DAOBairro bairroDAO = new DAOBairro();
-        bairroDAO.delete(objeto);
+        DAOBairro.getInstance().delete(objeto);
 
     }
      

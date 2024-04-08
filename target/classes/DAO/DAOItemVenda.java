@@ -14,7 +14,11 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import model.bo.ItemVenda;
 import model.bo.Carteirinha;
 import model.bo.Cliente;
 import model.bo.ItemVenda;
@@ -29,71 +33,63 @@ import view.Compra.PontoDeVendaView;
  */
 public class DAOItemVenda implements InterfaceDAO<ItemVenda> {
 
+    private static DAOItemVenda instance;
+    protected EntityManager entityManager;
+
+    public static DAOItemVenda getInstance() {
+        if (instance == null) {
+            instance = new DAOItemVenda();
+        }
+        return instance;
+    }
+
+    public DAOItemVenda() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("pu_Cantina");
+
+        if (entityManager == null) {
+            entityManager = factory.createEntityManager();
+        }
+        return entityManager;
+
+    }
+
     @Override
     public void create(ItemVenda objeto) {
-
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = " INSERT INTO TBLITEMVENDA (QTDPRODUTO,VALORUNITARIO,STATUS,"
-                + " TBLCARTEIRINHA_ID, TBLPRODUTO_ID, TBLVENDA_ID) VALUES"
-                + " (?,?,?,"
-                + " (SELECT A.id from tblcarteirinha A join tblcliente C on A.tblcliente_id = C.id Where A.tblcliente_id = ? limit 1 )"
-                + " ,?, ?)" ;
-
-        PreparedStatement pstm = null;
-
-        Venda venda = new Venda();
-        Carteirinha carterinha = new Carteirinha();
-        Cliente cliente = new Cliente();
-        Produto produto = new Produto();
-        
-        objeto.setVenda(venda);
-        objeto.setProduto(produto);
-        objeto.getVenda().setCarteirinha(carterinha);
-        
-        carterinha.setCliente(cliente);
-        venda.getCarteirinha().setCliente(cliente);
-        
-        
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            
-                pstm.setInt(1, (int) objeto.getQtdProduto());
-                pstm.setFloat(2, objeto.getValorUnitario());
-                pstm.setString(3, objeto.getStatus());
-                pstm.setInt(4, objeto.getVenda().getCarteirinha().getCliente().getId());
-                pstm.setInt(5, objeto.getProduto().getId());
-                pstm.setInt(6, objeto.getVenda().getId());
+          entityManager.getTransaction().begin();
+          entityManager.persist(objeto);
+          entityManager.getTransaction().commit();
+          
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          entityManager.getTransaction().rollback();
+        }
+    }
 
-                
-//            PontoDeVendaView pontoDeVendaView = new PontoDeVendaView(null, true);
-//            ControllerPontoDeVenda controllerPontoDeVenda = new ControllerPontoDeVenda(pontoDeVendaView);
-//
-//            
-//            for (int i = 0; i < pontoDeVendaView.getTabelaListaProduto().getRowCount(); i++) {
-//                
-//                int quant = (int) pontoDeVendaView.getTabelaListaProduto().getValueAt(i, 3);
-//                
-//                
-//                pstm.setInt(1,(int) pontoDeVendaView.getTabelaListaProduto().getValueAt(i, 3));
-//                pstm.setFloat(2, (float) pontoDeVendaView.getTabelaListaProduto().getValueAt(i, 2) / quant);
-//                pstm.setString(3, (String) pontoDeVendaView.getTabelaListaProduto().getValueAt(i, 4));          
-//                pstm.setInt(4, objeto.getVenda().getCliente().getId());
-//                pstm.setInt(5, objeto.getVenda().getProduto().getId());
-//                pstm.setInt(6, objeto.getVenda().getId());
-//           
-               pstm.execute();
-            
-            
+    @Override
+    public void delete(ItemVenda objeto) {
 
+    }
+
+    @Override
+    public void update(ItemVenda objeto) {
+        try {
+            ItemVenda ItemVenda = entityManager.find(ItemVenda.class,objeto);
             
-        } catch (SQLException ex) {
+            entityManager.getTransaction().begin();
+            entityManager.merge(objeto);
+            entityManager.getTransaction().commit();
+            
+            
+        } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
-
-        }}
-
-    
+            entityManager.getTransaction().rollback();
+        }
+    }
 
     @Override
     public void retrieve(ItemVenda objeto) {
@@ -101,68 +97,25 @@ public class DAOItemVenda implements InterfaceDAO<ItemVenda> {
     }
 
     @Override
-    public void update(ItemVenda objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public void delete(ItemVenda objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public List<ItemVenda> retrieve() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
+        List<ItemVenda> listaItemVenda;
+        listaItemVenda = entityManager.createQuery("select b from ItemVenda b", ItemVenda.class).getResultList();
+        return listaItemVenda;
     }
 
     @Override
     public ItemVenda retrieve(int parPK) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return entityManager.find(ItemVenda.class, parPK);
     }
 
     @Override
     public List<ItemVenda> retrieve(String parString) {
-
-        Connection conexao = ConnectionFactory.getConnection();
-        PontoDeVendaView pontoDeVendaView = new PontoDeVendaView(null, true);
-        ControllerPontoDeVenda controllerPontoDeVenda = new ControllerPontoDeVenda(pontoDeVendaView);
-        // String coluna = produtoView.getComboBoxFiltrar().getSelectedItem().toString().trim();
-
-        String sqlExecutar = "SELECT  descricao "
-                + "FROM tblproduto "
-                + "WHERE codigoBarra LIKE ?";  // Usando LIKE para busca de substring
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        List<ItemVenda> itemVendaList = new ArrayList<>();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-
-            //pstm.setString(1,colunaFiltro); 
-            pstm.setString(1, "%" + parString + "%");  // Usando parString diretamente
-
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                ItemVenda itemVenda = new ItemVenda();
-                Produto produto = new Produto();
-
-                itemVenda.setProduto(produto);
-
-                itemVenda.getProduto().setDescricao(rst.getString("descricao"));
-
-                itemVendaList.add(itemVenda);
-
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-        }
-
-        return itemVendaList;
+        
+        List<ItemVenda> listaItemVenda;
+        listaItemVenda = entityManager.createQuery("select b from ItemVenda b where b.descricao like :parDescricao",ItemVenda.class).setParameter("parDescricao","%" +parString + "%").getResultList();
+        return listaItemVenda;
 
     }
+
+   
 }

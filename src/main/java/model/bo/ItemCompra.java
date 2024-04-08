@@ -5,6 +5,7 @@
  */
 package model.bo;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +15,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="tblitemcompra")
 /**
  *
  * @author aluno
  */
-public class ItemCompra {
+public class ItemCompra implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -39,7 +42,7 @@ public class ItemCompra {
     private Compra compra;
     
     @JoinColumn
-    @OneToMany
+    @ManyToOne
     private Produto produto;
 
     public ItemCompra() {

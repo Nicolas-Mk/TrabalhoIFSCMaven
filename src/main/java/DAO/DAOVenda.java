@@ -14,7 +14,11 @@ import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import model.bo.Venda;
 import model.bo.Carteirinha;
 import model.bo.Cliente;
 import model.bo.Funcionario;
@@ -30,94 +34,92 @@ import view.Compra.PontoDeVendaView;
  */
 public class DAOVenda implements InterfaceDAO<Venda> {
 
+    private static DAOVenda instance;
+    protected EntityManager entityManager;
+
+    public static DAOVenda getInstance() {
+        if (instance == null) {
+            instance = new DAOVenda();
+        }
+        return instance;
+    }
+
+    public DAOVenda() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("pu_Cantina");
+
+        if (entityManager == null) {
+            entityManager = factory.createEntityManager();
+        }
+        return entityManager;
+
+    }
+
     @Override
     public void create(Venda objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "INSERT INTO TBLVENDA "
-                + "(VALORVENDA,DATAVENDA,HORAVENDA,OBSERVACAO,STATUS,TBLFUNCIONARIO_ID,TBLCARTEIRINHA_ID) "
-                + "VALUES (?,?,?,?,?,?,(SELECT ID FROM TBLCARTEIRINHA WHERE TBLCLIENTE_ID = ?))";
-
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setFloat(1, objeto.getValorVenda());
-            pstm.setString(2, objeto.getDataVenda());
-            pstm.setString(3, objeto.getHoraVenda());
-            pstm.setString(4, objeto.getObservacao());
-            pstm.setString(5, objeto.getStatus());
-            pstm.setInt(6,objeto.getFuncionario().getId());
-            pstm.setInt(7,objeto.getCarteirinha().getCliente().getId());
-            
-            pstm.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
+          entityManager.getTransaction().begin();
+          entityManager.persist(objeto);
+          entityManager.getTransaction().commit();
+          
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          entityManager.getTransaction().rollback();
+        }
+    }
 
+    @Override
+    public void delete(Venda objeto) {
+
+    }
+
+    @Override
+    public void update(Venda objeto) {
+        try {
+            Venda Venda = entityManager.find(Venda.class,objeto);
+            
+            entityManager.getTransaction().begin();
+            entityManager.merge(objeto);
+            entityManager.getTransaction().commit();
+            
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
         }
     }
 
     @Override
     public void retrieve(Venda objeto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 
-    @Override
-    public void update(Venda objeto) {
-         Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "UPDATE tblvenda SET observacao = ? , status = ?,"
-                + "TBLFuncionario_ID = ? , TBLCARTEIRINHA_ID = (SELECT ID FROM TBLCARTEIRINHA WHERE TBLCLIENTE_ID = ?),"
-                + "dataVenda = ?, horaVenda = ?, valorVenda = ?";
-        PreparedStatement pstm = null;
-        Venda  venda = new Venda();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            
-            pstm.setString(1, objeto.getObservacao());
-            pstm.setString(2, objeto.getStatus());
-            pstm.setInt(3, objeto.getFuncionario().getId());
-            pstm.setInt(4, objeto.getCarteirinha().getCliente().getId());
-            pstm.setString(5, objeto.getDataVenda());
-            pstm.setString(6, objeto.getHoraVenda());
-            pstm.setFloat(7, objeto.getValorVenda());
-            
-            
-            
-            pstm.execute();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
-        }
-
-    }
-
-    @Override
-    public void delete(Venda objeto) {
-        
     }
 
     @Override
     public List<Venda> retrieve() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Venda> listaVendas;
+        listaVendas = entityManager.createQuery("select b from Venda b", Venda.class).getResultList();
+        return listaVendas;
     }
 
     @Override
     public Venda retrieve(int parPK) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return entityManager.find(Venda.class, parPK);
     }
 
     @Override
     public List<Venda> retrieve(String parString) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        List<Venda> listaVendas;
+        listaVendas = entityManager.createQuery("select b from Venda b where b.descricao like :parDescricao",Venda.class).setParameter("parDescricao","%" +parString + "%").getResultList();
+        return listaVendas;
+
     }
 
     public String retornoNome(String info) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+   
 }

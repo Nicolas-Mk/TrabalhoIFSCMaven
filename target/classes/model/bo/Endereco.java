@@ -5,21 +5,25 @@
  */
 package model.bo;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="tblendereco")
 /**
  *
  * @author aluno
  */
-public class Endereco {
+public class Endereco implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +38,11 @@ public class Endereco {
     private String status;
 
     @JoinColumn
-    @OneToMany
+    @ManyToOne
     public Bairro bairro;
+    
     @JoinColumn
-    @OneToMany
+    @ManyToOne
     public Cidade cidade;
 
     public Endereco() {

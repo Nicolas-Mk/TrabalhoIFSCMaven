@@ -15,33 +15,50 @@ import model.bo.Produto;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.swing.JOptionPane;
+import model.bo.Produto;
 import view.Busca.ProdutoView;
 
 public class DAOProduto implements InterfaceDAO<Produto> {
 
+    private static DAOProduto instance;
+    protected EntityManager entityManager;
+
+    public static DAOProduto getInstance() {
+        if (instance == null) {
+            instance = new DAOProduto();
+        }
+        return instance;
+    }
+
+    public DAOProduto() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("pu_Cantina");
+
+        if (entityManager == null) {
+            entityManager = factory.createEntityManager();
+        }
+        return entityManager;
+
+    }
+
     @Override
     public void create(Produto objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "INSERT INTO tblproduto "
-                + "(descricao,codigoBarra,status) "
-                + "VALUES(?,?,?,)";
-
-        PreparedStatement pstm = null;
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, objeto.getDescricao());
-            pstm.setString(2, objeto.getCodigoBarra());
-            pstm.setString(3, objeto.getStatus());
-            pstm.execute();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
-
+          entityManager.getTransaction().begin();
+          entityManager.persist(objeto);
+          entityManager.getTransaction().commit();
+          
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          entityManager.getTransaction().rollback();
         }
-
     }
 
     @Override
@@ -51,29 +68,18 @@ public class DAOProduto implements InterfaceDAO<Produto> {
 
     @Override
     public void update(Produto objeto) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "UPDATE tblproduto SET "
-                + "descricao = ?, "
-                + "codigoBarra = ?,"
-                + "status = ?, "
-                + "WHERE id = ?";
-        PreparedStatement pstm = null;
-        Produto produto = new Produto();
-
         try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setString(1, objeto.getDescricao());
-            pstm.setString(2, objeto.getCodigoBarra());
-            pstm.setString(3, objeto.getStatus());
-            pstm.setInt(4, objeto.getId());
-            pstm.execute();
-
-        } catch (SQLException ex) {
+            Produto Produto = entityManager.find(Produto.class,objeto);
+            
+            entityManager.getTransaction().begin();
+            entityManager.merge(objeto);
+            entityManager.getTransaction().commit();
+            
+            
+        } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm);
+            entityManager.getTransaction().rollback();
         }
-
     }
 
     @Override
@@ -83,181 +89,27 @@ public class DAOProduto implements InterfaceDAO<Produto> {
 
     @Override
     public List<Produto> retrieve() {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id,descricao,codigoBarra,status FROM tblproduto";
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        List<Produto> produtoList = new ArrayList<>();
-
-        try {
-            Produto produto = new Produto();
-            pstm = conexao.prepareStatement(sqlExecutar);
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-
-                produto.setId(rst.getInt("id"));
-                produto.setDescricao(rst.getString("descricao"));
-                produto.setCodigoBarra(rst.getString("codigoBarra"));
-
-                produto.setStatus(rst.getString("status"));
-
-                produtoList.add(produto);
-            }
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return produtoList;
-        }
-
+        List<Produto> listaProdutos;
+        listaProdutos = entityManager.createQuery("select b from Produto b", Produto.class).getResultList();
+        return listaProdutos;
     }
 
     @Override
     public Produto retrieve(int parPK) {
-        Connection conexao = ConnectionFactory.getConnection();
-        String sqlExecutar = "SELECT id,descricao,codigoBarra,status FROM tblproduto WHERE id = ? ";
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-
-        Produto produto = new Produto();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-            pstm.setInt(1, parPK);
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                produto.setId(rst.getInt("id"));
-                produto.setDescricao(rst.getString("descricao"));
-                produto.setCodigoBarra(rst.getString("codigoBarra"));
-
-                produto.setStatus(rst.getString("status"));
-            }
-
-        } catch (SQLException ex) {
-
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-            return produto;
-
-        }
+        return entityManager.find(Produto.class, parPK);
     }
 
     @Override
     public List<Produto> retrieve(String parString) {
-        Connection conexao = ConnectionFactory.getConnection();
-        ProdutoView produtoView = new ProdutoView(null, true);
-        ControllerProdutoView controllerProdutoView = new ControllerProdutoView(produtoView);
-        // String coluna = produtoView.getComboBoxFiltrar().getSelectedItem().toString().trim();
+        
+        List<Produto> listaProdutos;
+        listaProdutos = entityManager.createQuery("select b from Produto b where b.descricao like :parDescricao",Produto.class).setParameter("parDescricao","%" +parString + "%").getResultList();
+        return listaProdutos;
 
-        String sqlExecutar = "SELECT id,descricao,codigoBarra,status "
-                + "FROM tblproduto "
-                + "WHERE " + colunaFiltro + " LIKE ?";  // Usando LIKE para busca de substring
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        List<Produto> produtoList = new ArrayList<>();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-
-            //pstm.setString(1,colunaFiltro); 
-            pstm.setString(1, "%" + parString + "%");  // Usando parString diretamente
-
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                Produto produto = new Produto();
-                produto.setId(rst.getInt("id"));
-                produto.setDescricao(rst.getString("descricao"));
-                produto.setCodigoBarra(rst.getString("codigoBarra"));
-                produto.setStatus(rst.getString("status"));
-
-                produtoList.add(produto);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-        }
-
-        return produtoList;  // Retornar a lista fora do bloco finally
     }
 
     public Produto RetornaDeLadinho(String cod) {
-        Connection conexao = ConnectionFactory.getConnection();
-        ProdutoView produtoView = new ProdutoView(null, true);
-        ControllerProdutoView controllerProdutoView = new ControllerProdutoView(produtoView);
-        // String coluna = produtoView.getComboBoxFiltrar().getSelectedItem().toString().trim();
-
-        String sqlExecutar = "SELECT id,descricao "
-                + "FROM tblproduto "
-                + "WHERE codigoBarra LIKE ?";
-
-        PreparedStatement pstm = null;
-        ResultSet rst = null;
-        Produto produto = new Produto();
-
-        try {
-            pstm = conexao.prepareStatement(sqlExecutar);
-
-            //pstm.setString(1,colunaFiltro); 
-            pstm.setString(1, "%" + cod + "%");  // Usando parString diretamente
-
-            rst = pstm.executeQuery();
-
-            while (rst.next()) {
-                
-                produto.setId(rst.getInt("id"));
-                produto.setDescricao(rst.getString("descricao"));
-
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        } finally {
-            ConnectionFactory.closeConnection(conexao, pstm, rst);
-        }
-
-        return produto;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-//    public Produto RetornaIDproduto(String cod) {
-//        Connection conexao = ConnectionFactory.getConnection();
-//        ProdutoView produtoView = new ProdutoView(null, true);
-//        ControllerProdutoView controllerProdutoView = new ControllerProdutoView(produtoView);
-//        // String coluna = produtoView.getComboBoxFiltrar().getSelectedItem().toString().trim();
-//
-//        String sqlExecutar = "SELECT ID "
-//                + "FROM tblproduto "
-//                + "WHERE codigoBarra LIKE ?";
-//
-//        PreparedStatement pstm = null;
-//        ResultSet rst = null;
-//        Produto produto = new Produto();
-//
-//        try {
-//            pstm = conexao.prepareStatement(sqlExecutar);
-//
-//            //pstm.setString(1,colunaFiltro); 
-//            pstm.setString(1, "%" + cod + "%");  // Usando parString diretamente
-//
-//            rst = pstm.executeQuery();
-//
-//            while (rst.next()) {
-//
-//                produto.setDescricao(rst.getString("ID"));
-//
-//            }
-//        } catch (SQLException ex) {
-//            ex.printStackTrace();
-//        } finally {
-//            ConnectionFactory.closeConnection(conexao, pstm, rst);
-//        }
-//
-//        return produto;
-//    }
+    
 }

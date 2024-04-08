@@ -3,6 +3,7 @@ model\bo\Cliente.class
 view\Busca\BairroView$3.class
 view\Busca\ProdutoView$1.class
 view\Cadastro\CadastroFornecedorView$2.class
+model\bo\Contas_.class
 view\TipoBusca1View$3.class
 view\Cadastro\CadastroProdutoView$3.class
 controller\Busca\ControllerCidadeView.class
@@ -19,6 +20,7 @@ view\MenuPrincipalView$11.class
 view\Cadastro\CadastroFuncionarioView$11.class
 view\Cadastro\CadastroClienteView$10.class
 view\Templates\TemplateCadastro.class
+model\bo\Produto_.class
 view\Busca\EnderecoView$1.class
 view\Busca\FornecedorView$1.class
 view\Cadastro\CadastroEnderecoView$3.class
@@ -36,6 +38,7 @@ view\Busca\ClienteView$5.class
 view\TemplateBusca$4.class
 view\Cadastro\CadastroFornecedorView$9.class
 view\Compra\PontoDeVendaView$5.class
+model\bo\MovimentoCaixa_.class
 view\Cadastro\CadastroClienteView$13$1.class
 view\Templates\TemplateCadastro$2.class
 view\Busca\ProdutoView$3.class
@@ -51,6 +54,8 @@ view\Busca\FuncionarioView$5.class
 Service\FornecedorService.class
 view\Cadastro\CadastroEnderecoView$8.class
 view\Cadastro\CadastroClienteView$5.class
+model\bo\Bairro_.class
+model\bo\Pessoa_.class
 view\Busca\ClienteView$3.class
 view\TemplateBusca.class
 view\Cadastro\CadastroProdutoView.class
@@ -85,6 +90,7 @@ view\TemplateBusca$2.class
 DAO\Persiste.class
 view\Cadastro\CadastroFornecedorView$4.class
 model\bo\Cidade.class
+model\bo\ItemVenda_.class
 view\Cadastro\CadastroClienteView$2.class
 view\MenuPrincipalView.class
 DAO\DAOVenda.class
@@ -113,7 +119,9 @@ view\Busca\EnderecoView$5.class
 view\TipoBusca1View$2.class
 view\Cadastro\CadastroFornecedorView$10.class
 Service\CarteirinhaService.class
+model\bo\Fornecedor_.class
 view\Cadastro\CadastroCarteirinhaView$10.class
+model\bo\Compra_.class
 view\Busca\BairroView$6.class
 view\Busca\EnderecoView$4.class
 view\Cadastro\CadastroFornecedorView$11.class
@@ -126,6 +134,8 @@ view\Busca\VendaView.class
 view\Busca\FuncionarioView$4.class
 view\Cadastro\CadastroEnderecoView$4.class
 view\Compra\AbreCaixaView$1.class
+model\bo\Cidade_.class
+model\bo\MovimentacaoEstoque_.class
 view\Cadastro\CadastroEnderecoView$10.class
 DAO\DAOBairro.class
 view\Cadastro\CadastroCarteirinhaView$4.class
@@ -141,6 +151,7 @@ view\Cadastro\CadastroCidadesView$6$1.class
 controller\cadastro\ControllerCadastroProduto.class
 view\Cadastro\CadastroFornecedorView$8.class
 view\Cadastro\CadastroCidadesView$3.class
+model\bo\Endereco_.class
 view\Cadastro\CadastroEnderecoView$9.class
 view\Cadastro\CadastroFuncionarioView$4.class
 view\MenuPrincipalView$6.class
@@ -154,6 +165,7 @@ controller\cadastro\ControllerCadastroFuncionario.class
 view\Busca\CarteirinhaView$4.class
 view\Compra\PontoDeVendaView$6.class
 view\Cadastro\CadastroProdutoView$2.class
+model\bo\Funcionario_.class
 view\Busca\ProdutoView.class
 view\Cadastro\CadastroFornecedorView$3.class
 view\Busca\BairroView$2.class
@@ -165,7 +177,6 @@ view\Templates\TemplateCadastro$5.class
 view\Cadastro\CadastroCarteirinhaView$2.class
 DAO\InterfaceDAO.class
 view\Cadastro\CadastroClienteView$4.class
-DAO\ConnectionFactory.class
 model\bo\Bairro.class
 view\Templates\TemplateCadastro$3.class
 view\Busca\FuncionarioView$2.class
@@ -185,6 +196,7 @@ utilities\Utilities.class
 view\Busca\ProdutoView$2.class
 model\bo\Produto.class
 DAO\DAOFornecedor.class
+model\bo\Cliente_.class
 DAO\DAOAbreCaixa.class
 view\Busca\ProdutoView$4.class
 controller\Busca\ControllerEnderecoView.class
@@ -202,6 +214,7 @@ view\Compra\PontoDeVendaView$4.class
 view\Cadastro\CadastroFuncionarioView$1.class
 view\MenuPrincipalView$8.class
 controller\cadastro\ControllerCadastroCliente.class
+model\bo\Venda_.class
 view\Cadastro\CadastroEnderecoView$2.class
 controller\Compra\ControllerAbrirCaixa.class
 view\Busca\VendaView$4.class
@@ -217,6 +230,7 @@ view\Busca\ProdutoView$5.class
 view\Cadastro\CadastroClienteView$9.class
 view\Cadastro\CadastroCarteirinhaView$6.class
 view\Compra\PontoDeVendaView$13.class
+model\bo\ItemCompra_.class
 model\bo\Fornecedor.class
 view\Templates\TemplateCadastro$1.class
 view\Compra\AbreCaixaView.class
@@ -237,8 +251,10 @@ controller\cadastro\ControllerCadastroBairro.class
 view\Compra\AbreCaixaView$2.class
 view\Compra\PontoDeVendaView$8.class
 model\bo\MovimentoCaixa.class
+model\bo\Caixa_.class
 view\Cadastro\CadastroFuncionarioView$8.class
 view\Cadastro\CadastroCarteirinhaView$8.class
+model\bo\Carteirinha_.class
 view\Templates\TemplateCadastro$5$1.class
 view\Cadastro\CadastroFuncionarioView$7.class
 view\Cadastro\CadastroCidadesView$2.class

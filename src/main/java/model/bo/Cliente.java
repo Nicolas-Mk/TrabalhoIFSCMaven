@@ -5,15 +5,18 @@
  */
 package model.bo;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="tblcliente")
 /**
  *
  * @author aluno
  */
-public class Cliente extends Pessoa{
+public class Cliente extends Pessoa implements Serializable{
     
     @Column
     private String cpf;
