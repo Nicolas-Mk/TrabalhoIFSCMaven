@@ -78,9 +78,12 @@ public class ControllerCadastroEndereco implements ActionListener {
                 this.cadastroEnderecoView.getjTextFieldLogradouro1().setText(endereco.getLogradouro() + "");
                 this.cadastroEnderecoView.getjTextFieldCEP().setText(endereco.getCep() + "");
                 this.cadastroEnderecoView.getjTextFieldCidade().setText(endereco.getCidade().getDescricao() + "");
+                this.cadastroEnderecoView.getJTextFieldUf().setText(endereco.getCidade().getUf()+ "");
                 this.cadastroEnderecoView.getjTextFieldBairro().setText(endereco.getBairro().getDescricao() + "");
                 this.cadastroEnderecoView.getjComboBoxStatus().setSelectedItem(endereco.getStatus() + "");
 
+                
+                this.cadastroEnderecoView.getJTextFieldUf().setEnabled(false);
                 this.cadastroEnderecoView.getjTextFieldID().setEnabled(false);
                 this.cadastroEnderecoView.getjTextFieldLogradouro1().setEnabled(true);
                 this.cadastroEnderecoView.getjTextFieldBairro().setEnabled(false);
@@ -99,13 +102,24 @@ public class ControllerCadastroEndereco implements ActionListener {
 
             this.cadastroEnderecoView.getjTextFieldBairro().setText(controllerBairroView.bairroEndereco);
 
-        } else if (e.getSource() == this.cadastroEnderecoView.getjButtonCidade()) {
+            
+            
+        } 
+        
+        
+        
+        else if (e.getSource() == this.cadastroEnderecoView.getjButtonCidade()) {
             CidadeView cidadeView = new CidadeView(null, true);
             ControllerCidadeView controllerCidadeView = new ControllerCidadeView(cidadeView);
             cidadeView.setVisible(true);
-
+              
+                
+            this.cadastroEnderecoView.getJTextFieldUf().setText(controllerCidadeView.ufEndereco);
             this.cadastroEnderecoView.getjTextFieldCidade().setText(controllerCidadeView.cidadeEnderenco);
 
+           
+            
+            
         } else if (e.getSource() == this.cadastroEnderecoView.getjButtonGravar()) {
 
             if (utilities.Utilities.campoVazio(this.cadastroEnderecoView.getjPanelMeio()) == true) {
@@ -122,6 +136,7 @@ public class ControllerCadastroEndereco implements ActionListener {
                 endereco.setCep(this.cadastroEnderecoView.getjTextFieldCEP().getText());
                 endereco.setLogradouro(this.cadastroEnderecoView.getjTextFieldLogradouro1().getText());
                 endereco.getCidade().setDescricao(this.cadastroEnderecoView.getjTextFieldCidade().getText());
+                endereco.getCidade().setUf(this.cadastroEnderecoView.getJTextFieldUf().getText());
                 endereco.getBairro().setDescricao(this.cadastroEnderecoView.getjTextFieldBairro().getText());
                 endereco.setStatus(this.cadastroEnderecoView.getjComboBoxStatus().getSelectedItem().toString());
 

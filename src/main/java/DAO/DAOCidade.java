@@ -68,7 +68,7 @@ public class DAOCidade implements InterfaceDAO<Cidade> {
     @Override
     public void update(Cidade objeto) {
         try {
-            Cidade Cidade = entityManager.find(Cidade.class,objeto);
+            Cidade Cidade = entityManager.find(Cidade.class,objeto.getId());
             
             entityManager.getTransaction().begin();
             entityManager.merge(objeto);

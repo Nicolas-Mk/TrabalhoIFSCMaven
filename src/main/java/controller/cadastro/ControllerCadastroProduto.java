@@ -68,13 +68,15 @@ public class ControllerCadastroProduto implements ActionListener {
                 this.cadastroProdutoView.getjTextFieldDescricao().setText(produto.getDescricao() + "");
                 this.cadastroProdutoView.getjTextFieldCodigoBarra().setText(produto.getCodigoBarra() + "");
                 this.cadastroProdutoView.getjComboBoxStatus().setSelectedItem(produto.getStatus().toString() + "");
-
+                this.cadastroProdutoView.getjTextFieldPreco().setText(produto.getPreco()+ "");
+                
                 this.cadastroProdutoView.getjTextFieldID2().setEnabled(false);
                 this.cadastroProdutoView.getjTextFieldDescricao().setEnabled(true);
                 this.cadastroProdutoView.getjTextFieldCodigoBarra().setEnabled(true);
-                this.cadastroProdutoView.getjTextFieldQuantidade().setEnabled(true);
+                this.cadastroProdutoView.getjTextFieldPreco().setEnabled(true);
                 this.cadastroProdutoView.getjComboBoxStatus().setEnabled(true);
-                this.cadastroProdutoView.getjComboBoxTipoUnidade().setEnabled(true);
+                
+                        
             }
 
         } else if (e.getSource() == this.cadastroProdutoView.getjButtonGravar()) {
@@ -89,7 +91,8 @@ public class ControllerCadastroProduto implements ActionListener {
                 produto.setDescricao(this.cadastroProdutoView.getjTextFieldDescricao().getText());
                 produto.setCodigoBarra(this.cadastroProdutoView.getjTextFieldCodigoBarra().getText());
                 produto.setStatus(this.cadastroProdutoView.getjComboBoxStatus().getSelectedItem().toString());
-
+                produto.setPreco(Float.parseFloat(this.cadastroProdutoView.getjTextFieldPreco().getText()));
+                
                 if (this.cadastroProdutoView.getjTextFieldID2().getText().trim().equalsIgnoreCase("")) {
 
                     Service.ProdutoService.adicionar(produto);

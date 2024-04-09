@@ -22,7 +22,7 @@ import model.bo.Cidade;
 
 public class DAOEndereco implements InterfaceDAO<Endereco> {
 
-private static DAOEndereco instance;
+    private static DAOEndereco instance;
     protected EntityManager entityManager;
 
     public static DAOEndereco getInstance() {
@@ -49,13 +49,13 @@ private static DAOEndereco instance;
     @Override
     public void create(Endereco objeto) {
         try {
-          entityManager.getTransaction().begin();
-          entityManager.persist(objeto);
-          entityManager.getTransaction().commit();
-          
+            entityManager.getTransaction().begin();
+            entityManager.persist(objeto);
+            entityManager.getTransaction().commit();
+
         } catch (Exception ex) {
-          ex.printStackTrace();
-          entityManager.getTransaction().rollback();
+            ex.printStackTrace();
+            entityManager.getTransaction().rollback();
         }
     }
 
@@ -67,13 +67,12 @@ private static DAOEndereco instance;
     @Override
     public void update(Endereco objeto) {
         try {
-            Endereco Endereco = entityManager.find(Endereco.class,objeto);
-            
+            Endereco Endereco = entityManager.find(Endereco.class, objeto.getId());
+
             entityManager.getTransaction().begin();
             entityManager.merge(objeto);
             entityManager.getTransaction().commit();
-            
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
             entityManager.getTransaction().rollback();
@@ -97,14 +96,19 @@ private static DAOEndereco instance;
         return entityManager.find(Endereco.class, parPK);
     }
 
-    @Override
-    public List<Endereco> retrieve(String parString) {
-        
+    public List<Endereco> retrieve(String nomeParametro, String parString) {
+
         List<Endereco> listaEnderecos;
-        listaEnderecos = entityManager.createQuery("select b from Endereco b where b.descricao like :parDescricao",Endereco.class).setParameter("parDescricao","%" +parString + "%").getResultList();
+
+        listaEnderecos = entityManager.createQuery("select b from Endereco b "
+                + "where b." + nomeParametro + " like :parDescricao", Endereco.class).setParameter("parDescricao", "%" + parString + "%").getResultList();
         return listaEnderecos;
 
-    }    
-    
-    
+    }
+
+    @Override
+    public List<Endereco> retrieve(String parString) {
+       return null;
+    }
+
 }

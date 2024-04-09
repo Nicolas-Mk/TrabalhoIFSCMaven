@@ -69,7 +69,7 @@ public class DAOProduto implements InterfaceDAO<Produto> {
     @Override
     public void update(Produto objeto) {
         try {
-            Produto Produto = entityManager.find(Produto.class,objeto);
+            Produto Produto = entityManager.find(Produto.class,objeto.getId());
             
             entityManager.getTransaction().begin();
             entityManager.merge(objeto);

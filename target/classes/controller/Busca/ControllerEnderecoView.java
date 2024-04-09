@@ -29,6 +29,7 @@ public class ControllerEnderecoView implements ActionListener {
     public static String enderecoCEP;
     public static String enderecoBairro;
     public static String enderecoCidade;
+    public static String enderecoUF;
     
     public ControllerEnderecoView(EnderecoView enderecoView) {
         this.enderecoView = enderecoView;
@@ -46,7 +47,9 @@ public class ControllerEnderecoView implements ActionListener {
             enderecoCEP = (String) this.enderecoView.getjTable1().getValueAt(this.enderecoView.getjTable1().getSelectedRow(), 1);
             enderecoCidade = (String) this.enderecoView.getjTable1().getValueAt(this.enderecoView.getjTable1().getSelectedRow(),4);
             enderecoBairro = (String) this.enderecoView.getjTable1().getValueAt(this.enderecoView.getjTable1().getSelectedRow(),3);
-
+            enderecoUF = (String) this.enderecoView.getjTable1().getValueAt(this.enderecoView.getjTable1().getSelectedRow(), 5);
+            
+            
             logradouroEndereco = logradouro;
 
             EnderecoService.carregar();
@@ -56,7 +59,9 @@ public class ControllerEnderecoView implements ActionListener {
         } else if (e.getSource() == this.enderecoView.getjButtonSair()) {
             this.enderecoView.dispose();
 
-        } else if (e.getSource() == this.enderecoView.getjButtonBuscar()) {
+        } 
+        
+        else if (e.getSource() == this.enderecoView.getjButtonBuscar()) {
 
             if (this.enderecoView.getjTextBuscar().getText().trim().equalsIgnoreCase("")) {
                 JOptionPane.showMessageDialog(null, "Atenção! \nOpcão de Filtro Vazia...");
@@ -66,9 +71,9 @@ public class ControllerEnderecoView implements ActionListener {
                 if (this.enderecoView.getComboBoxFiltrar().getSelectedIndex() == 0) {
                     
                     enderecoList.add(EnderecoService.carregar(Integer.parseInt(this.enderecoView.getjTextBuscar().getText())));
-                } else{
-                    colunaFiltro = this.enderecoView.getComboBoxFiltrar().getSelectedItem().toString().trim();
-                    enderecoList = EnderecoService.carregar(this.enderecoView.getjTextBuscar().getText().trim());
+                } else if(this.enderecoView.getComboBoxFiltrar().getSelectedIndex() == 1){
+                    
+                    enderecoList = EnderecoService.carregar("logradouro", this.enderecoView.getjTextBuscar().getText());
                     
                 }
 
@@ -80,6 +85,7 @@ public class ControllerEnderecoView implements ActionListener {
                         enderecoAtual.getLogradouro(),
                         enderecoAtual.getBairro().getDescricao(),
                         enderecoAtual.getCidade().getDescricao(),
+                        enderecoAtual.getCidade().getUf(),
                         enderecoAtual.getStatus()
 
                     });

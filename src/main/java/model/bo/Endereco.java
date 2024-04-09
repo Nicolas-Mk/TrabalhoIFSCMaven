@@ -37,11 +37,11 @@ public class Endereco implements Serializable {
     @Column
     private String status;
 
-    @JoinColumn
+    @JoinColumn(name = "tblbairro_id")
     @ManyToOne
     public Bairro bairro;
     
-    @JoinColumn
+    @JoinColumn (name = "tblcidade_id")
     @ManyToOne
     public Cidade cidade;
 

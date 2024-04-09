@@ -29,7 +29,8 @@ public class ControllerCidadeView implements ActionListener {
 
     public static String colunaFiltro;
     public static String cidadeEnderenco;
-  
+    public static String ufEndereco;
+    
     CidadeView cidadeView;
     
 
@@ -51,8 +52,7 @@ public class ControllerCidadeView implements ActionListener {
 
                 ControllerCadastroCidade.codigo = (int) this.cidadeView.getjTable1().getValueAt(this.cidadeView.getjTable1().getSelectedRow(), 0);
                 cidadeEnderenco = (String) this.cidadeView.getjTable1().getValueAt(this.cidadeView.getjTable1().getSelectedRow(), 1);
-                
-                
+                ufEndereco = (String) this.cidadeView.getjTable1().getValueAt(this.cidadeView.getjTable1().getSelectedRow(), 2);
                 
                 
                 this.cidadeView.dispose();

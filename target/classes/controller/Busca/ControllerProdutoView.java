@@ -85,6 +85,7 @@ public class ControllerProdutoView implements ActionListener {
                         produtoAtual.getId(),
                         produtoAtual.getDescricao(),
                         produtoAtual.getCodigoBarra(),
+                        produtoAtual.getPreco(),
                         produtoAtual.getStatus()});
 
                 }

@@ -29,6 +29,8 @@ public class EnderecoView extends javax.swing.JDialog {
         initComponents();
     }
 
+    
+    
     public JButton getjButtonBuscar() {
         return jButtonBuscar;
     }
@@ -164,14 +166,14 @@ public class EnderecoView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "CEP", "Logradouro", "Bairro", "Cidade", "Status"
+                "ID", "CEP", "Logradouro", "Bairro", "Cidade", "Uf", "Status"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(100);
             jTable1.getColumnModel().getColumn(1).setMaxWidth(180);
-            jTable1.getColumnModel().getColumn(5).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(100);
         }
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

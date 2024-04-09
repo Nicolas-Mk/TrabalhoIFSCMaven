@@ -172,7 +172,7 @@ public class ProdutoView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "ID", "Descricao", "Codigo de Barra", "Quantidade", "Status"
+                "ID", "Descricao", "Codigo de Barra", "Preco", "Status"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

@@ -32,7 +32,14 @@ public class CadastroEnderecoView extends javax.swing.JDialog {
 
     }
 
-   
+    public JTextField getJTextFieldUf() {
+        return JTextFieldUf;
+    }
+
+    public void setJTextFieldUf(JTextField JTextFieldUf) {
+        this.JTextFieldUf = JTextFieldUf;
+    }
+
 
     public JButton getjButtonBairro() {
         return jButtonBairro;
@@ -257,6 +264,8 @@ public class CadastroEnderecoView extends javax.swing.JDialog {
         jComboBoxStatus = new javax.swing.JComboBox<>();
         jLabelStatus = new javax.swing.JLabel();
         jTextFieldCEP = new javax.swing.JFormattedTextField();
+        JTextFieldUf = new javax.swing.JTextField();
+        jLabelUf = new javax.swing.JLabel();
         jPanelFim = new javax.swing.JPanel();
         jButtonNovo = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
@@ -334,39 +343,44 @@ public class CadastroEnderecoView extends javax.swing.JDialog {
             }
         });
 
+        jLabelUf.setText("uf");
+
         javax.swing.GroupLayout jPanelMeioLayout = new javax.swing.GroupLayout(jPanelMeio);
         jPanelMeio.setLayout(jPanelMeioLayout);
         jPanelMeioLayout.setHorizontalGroup(
             jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMeioLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelCidade)
+                    .addComponent(jLabelLogradouro)
+                    .addComponent(jLabelID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldLogradouro1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelMeioLayout.createSequentialGroup()
+                        .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelUf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JTextFieldUf)))
                 .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelMeioLayout.createSequentialGroup()
-                        .addGap(48, 48, 48)
-                        .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabelLogradouro)
-                            .addComponent(jLabelID))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldLogradouro1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelMeioLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabelStatus)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                            .addGroup(jPanelMeioLayout.createSequentialGroup()
-                                .addGap(253, 253, 253)
-                                .addComponent(jLabelCEP)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))))
+                        .addGap(253, 253, 253)
+                        .addComponent(jLabelCEP)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE))
                     .addGroup(jPanelMeioLayout.createSequentialGroup()
-                        .addGap(75, 75, 75)
-                        .addComponent(jLabelCidade)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCidade)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelBairro)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelMeioLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabelStatus))
+                            .addGroup(jPanelMeioLayout.createSequentialGroup()
+                                .addComponent(jButtonCidade)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabelBairro)))
                         .addGap(18, 18, 18)))
                 .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanelMeioLayout.createSequentialGroup()
@@ -397,12 +411,14 @@ public class CadastroEnderecoView extends javax.swing.JDialog {
                     .addComponent(jButtonBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelCidade))
+                        .addComponent(jLabelCidade)
+                        .addComponent(JTextFieldUf, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelUf))
                     .addComponent(jButtonCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelMeioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabelBairro)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jPanelFim.setBackground(new java.awt.Color(0, 102, 153));
@@ -579,6 +595,7 @@ public class CadastroEnderecoView extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JTextFieldUf;
     private javax.swing.JButton jButtonBairro;
     private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonCancelar;
@@ -593,6 +610,7 @@ public class CadastroEnderecoView extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelID;
     private javax.swing.JLabel jLabelLogradouro;
     private javax.swing.JLabel jLabelStatus;
+    private javax.swing.JLabel jLabelUf;
     private javax.swing.JLabel jLtitulo;
     private javax.swing.JPanel jPanelFim;
     private javax.swing.JPanel jPanelMeio;

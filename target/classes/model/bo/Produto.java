@@ -93,6 +93,7 @@ public class Produto implements Serializable {
         return this.getId() + " "+
                 this.getDescricao() + " "+
                 this.getCodigoBarra()+ " "+
+                this.getPreco()+" "+
                 this.getStatus() + " ";
                 
     }

@@ -36,9 +36,9 @@ public class EnderecoService {
 
     }
 
-    public static List<Endereco> carregar(String parString) {
+    public static List<Endereco> carregar(String nomeParametro,String parString) {
         DAOEndereco enderecoDAO = new DAOEndereco();
-        return enderecoDAO.retrieve(parString);
+        return enderecoDAO.getInstance().retrieve(nomeParametro,parString);
 
     }
     

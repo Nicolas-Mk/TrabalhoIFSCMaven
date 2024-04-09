@@ -28,7 +28,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="jPanelMeio" alignment="0" pref="923" max="32767" attributes="0"/>
-          <Component id="jPanelFim" alignment="0" pref="923" max="32767" attributes="0"/>
+          <Component id="jPanelFim" alignment="0" max="32767" attributes="0"/>
           <Component id="jPanelTitulo" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
@@ -92,30 +92,35 @@
                       <Component id="jLabelID" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jTextFieldID2" min="-2" pref="90" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="509" max="-2" attributes="0"/>
-                          <Component id="jLabelStatus" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jTextFieldDescricao" min="-2" pref="535" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="jTextFieldCodigoBarra" min="-2" pref="535" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabelTipo" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jTextFieldID2" min="-2" pref="90" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="518" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jTextFieldDescricao" min="-2" pref="535" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabelStatus" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelPreco" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jComboBoxStatus" max="32767" attributes="0"/>
+                              <Component id="jTextFieldPreco" min="-2" pref="125" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jComboBoxStatus" pref="125" max="32767" attributes="0"/>
-                      <Component id="jTextFieldQuantidade" max="32767" attributes="0"/>
-                      <Component id="jComboBoxTipoUnidade" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -133,17 +138,15 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldDescricao" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelPreco" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelDescricao1" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldCodigoBarra" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelTipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxTipoUnidade" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="54" max="32767" attributes="0"/>
+                  <EmptySpace pref="58" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -154,7 +157,7 @@
             <Property name="text" type="java.lang.String" value="ID"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldQuantidade">
+        <Component class="javax.swing.JTextField" name="jTextFieldPreco">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelDescricao">
           <Properties>
@@ -163,9 +166,9 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDescricao">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
+        <Component class="javax.swing.JLabel" name="jLabelPreco">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Quantidade"/>
+            <Property name="text" type="java.lang.String" value="Preco"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldID2">
@@ -196,28 +199,6 @@
         <Component class="javax.swing.JLabel" name="jLabelStatus">
           <Properties>
             <Property name="text" type="java.lang.String" value="Status"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxTipoUnidade">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="Unidade"/>
-                <StringItem index="1" value="Fardo"/>
-                <StringItem index="2" value="Caixa"/>
-                <StringItem index="3" value="Cento"/>
-                <StringItem index="4" value="KG"/>
-                <StringItem index="5" value="Litro"/>
-              </StringArray>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabelTipo">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Tipo"/>
           </Properties>
         </Component>
       </SubComponents>
